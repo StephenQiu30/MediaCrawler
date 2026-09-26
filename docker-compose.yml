@@ -1,0 +1,22 @@
+name: mediacrawler
+
+services:
+  crawler:
+    container_name: mediacrawler
+    profiles: [manual]
+    build:
+      context: .
+      dockerfile: Dockerfile.local
+    image: mediacrawler:local
+    init: true
+    environment:
+      MEDIACRAWLER_CONTAINER: "1"
+    working_dir: /app
+    volumes:
+      - ./data:/app/data
+      - ./browser_data/docker:/app/browser_data
+    shm_size: 1gb
+    cpus: 2.0
+    mem_limit: 3g
+    restart: "no"
+    command: ["uv", "run", "--no-sync", "main.py", "--help"]

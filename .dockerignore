@@ -1,0 +1,12 @@
+.git
+.venv
+__pycache__
+*.pyc
+.env*
+data
+browser_data
+node_modules
+webui/node_modules
+webui/dist
+tests
+test
