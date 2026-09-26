@@ -200,6 +200,9 @@ class BilibiliCrawler(AbstractCrawler):
         """
         utils.logger.info("[BilibiliCrawler.search_by_keywords] Begin search bilibli keywords")
         bili_limit_count = 20  # bilibili limit page fixed value
+        # HotKey: remember the requested cap; one search page still returns 20 results,
+        # but only this many videos get the follow-up detail and comment requests.
+        requested_notes = config.CRAWLER_MAX_NOTES_COUNT
         if config.CRAWLER_MAX_NOTES_COUNT < bili_limit_count:
             config.CRAWLER_MAX_NOTES_COUNT = bili_limit_count
         start_page = config.START_PAGE  # start page number
@@ -228,6 +231,7 @@ class BilibiliCrawler(AbstractCrawler):
                 if not video_list:
                     utils.logger.info(f"[BilibiliCrawler.search_by_keywords] No more videos for '{keyword}', moving to next keyword.")
                     break
+                video_list = video_list[:requested_notes]  # HotKey: enforce the requested cap
 
                 semaphore = asyncio.Semaphore(config.MAX_CONCURRENCY_NUM)
                 task_list = []
