@@ -80,7 +80,7 @@ BROWSER_LAUNCH_TIMEOUT = 60
 # 用户需要在 Chrome 中开启远程调试：chrome://inspect/#remote-debugging
 # 或者使用命令行参数启动 Chrome：--remote-debugging-port=9222
 # 这种方式反检测效果最好，因为直接使用用户真实浏览器的所有 Cookie、扩展和浏览历史
-CDP_CONNECT_EXISTING = True
+CDP_CONNECT_EXISTING = False  # HotKey: launch a dedicated profile; never attach to the everyday browser
 
 # 程序结束时是否自动关闭浏览器
 # 设置为 False 可以保持浏览器运行，方便调试
@@ -99,7 +99,7 @@ USER_DATA_DIR = "%s_user_data_dir"  # %s will be replaced by platform name
 START_PAGE = 1
 
 # Control the number of crawled videos/posts
-CRAWLER_MAX_NOTES_COUNT = 15
+CRAWLER_MAX_NOTES_COUNT = 10  # HotKey: low volume on the owner's own accounts
 
 # Controlling the number of concurrent crawlers
 MAX_CONCURRENCY_NUM = 1
@@ -114,7 +114,7 @@ ENABLE_GET_MEDIA = False
 ENABLE_GET_COMMENTS = True
 
 # Control the number of crawled first-level comments (single video/post)
-CRAWLER_MAX_COMMENTS_COUNT_SINGLENOTES = 10
+CRAWLER_MAX_COMMENTS_COUNT_SINGLENOTES = 20
 
 # Whether to enable the mode of crawling second-level comments. By default, crawling of second-level comments is not enabled.
 # If the old version of the project uses db, you need to refer to schema/tables.sql line 287 to add table fields.
@@ -137,7 +137,7 @@ STOP_WORDS_FILE = "./docs/hit_stopwords.txt"
 FONT_PATH = "./docs/STZHONGS.TTF"
 
 # Crawl interval
-CRAWLER_MAX_SLEEP_SEC = 2
+CRAWLER_MAX_SLEEP_SEC = 8  # HotKey: slow, human-scale pacing between requests
 
 # 是否禁用 SSL 证书验证。仅在使用企业代理、Burp Suite、mitmproxy 等会注入自签名证书的中间人代理时设为 True。
 # 警告：禁用 SSL 验证将使所有流量暴露于中间人攻击风险，请勿在生产环境中开启。

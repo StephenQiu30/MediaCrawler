@@ -180,6 +180,9 @@ class DouYinLogin(AbstractLogin):
         except PlaywrightTimeoutError:  # No slider verification, return directly
             return
 
+        # HotKey: never solve verification challenges automatically; stop and let the owner decide.
+        utils.logger.error("[DouYinLogin.check_page_display_slider] verification challenge shown; stopping")
+        raise RuntimeError("platform verification challenge shown; automatic solving is disabled")
         gap_selector = 'xpath=//*[@id="captcha_container"]/div/div[2]/img[2]'
         max_slider_try_times = 20
         slider_verify_success = False
