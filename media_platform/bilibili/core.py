@@ -222,7 +222,7 @@ class BilibiliCrawler(AbstractCrawler):
                     keyword=keyword,
                     page=page,
                     page_size=bili_limit_count,
-                    order=SearchOrderType.DEFAULT,
+                    order=SearchOrderType.LAST_PUBLISH,  # HotKey: newest first for monitoring
                     pubtime_begin_s=0,  # Publish date start timestamp
                     pubtime_end_s=0,  # Publish date end timestamp
                 )
