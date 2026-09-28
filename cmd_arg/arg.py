@@ -308,6 +308,14 @@ async def parse_cmd(argv: Optional[Sequence[str]] = None):
                 rich_help_panel="Storage Configuration",
             ),
         ] = config.SAVE_DATA_PATH,
+        hotkey_safety_mode: Annotated[
+            str,
+            typer.Option(
+                "--hotkey_safety_mode",
+                help="Emit bounded Bilibili safety exit codes for the HotKey subprocess",
+                rich_help_panel="Runtime Configuration",
+            ),
+        ] = str(config.HOTKEY_SAFETY_MODE),
         enable_ip_proxy: Annotated[
             str,
             typer.Option(
@@ -372,6 +380,9 @@ async def parse_cmd(argv: Optional[Sequence[str]] = None):
         config.CRAWLER_MAX_NOTES_COUNT = crawler_max_notes_count
         config.MAX_CONCURRENCY_NUM = max_concurrency_num
         config.SAVE_DATA_PATH = save_data_path
+        config.HOTKEY_SAFETY_MODE = _to_bool(hotkey_safety_mode)
+        if config.HOTKEY_SAFETY_MODE and platform != PlatformEnum.BILIBILI:
+            raise typer.BadParameter("HotKey safety mode is only supported for Bilibili")
         config.ENABLE_IP_PROXY = enable_ip_proxy_value
         config.IP_PROXY_POOL_COUNT = ip_proxy_pool_count
         config.IP_PROXY_PROVIDER_NAME = ip_proxy_provider_name

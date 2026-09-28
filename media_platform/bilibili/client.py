@@ -83,11 +83,15 @@ class BilibiliClient(AbstractApiClient, ProxyRefreshMixin):
 
         async with make_async_client(proxy=self.proxy) as client:
             response = await client.request(method, url, timeout=self.timeout, **kwargs)
+        if config.HOTKEY_SAFETY_MODE and response.status_code == 429:
+            raise SystemExit(71)
         try:
             data: Dict = response.json()
         except json.JSONDecodeError:
             utils.logger.error(f"[BilibiliClient.request] Failed to decode JSON from response. status_code: {response.status_code}, response_text: {response.text}")
             raise DataFetchError(f"Failed to decode JSON, content: {response.text}")
+        if config.HOTKEY_SAFETY_MODE and data.get("code") == -101:
+            raise SystemExit(70)
         if data.get("code") != 0:
             raise DataFetchError(data.get("message", "unkonw error"))
         else:
