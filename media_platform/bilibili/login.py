@@ -79,6 +79,10 @@ class BilibiliLogin(AbstractLogin):
     async def begin(self):
         """Start login bilibili"""
         utils.logger.info("[BilibiliLogin.begin] Begin login Bilibili ...")
+        if config.HOTKEY_SAFETY_MODE:
+            # The operator checks the dedicated profile outside this collection job.
+            # A missing/expired session must never start QR or slider interaction.
+            raise SystemExit(70)
         if config.LOGIN_TYPE == "qrcode":
             await self.login_by_qrcode()
         elif config.LOGIN_TYPE == "phone":
